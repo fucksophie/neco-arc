@@ -1,0 +1,21 @@
+{
+  "name": "neco-arc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "keywords": [],
+  "author": "",
+  "type": "module",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/builders": "^0.7.0",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "@joshdb/core": "^1.2.7",
+    "@joshdb/sqlite": "^1.1.9",
+    "discord.js": "^13.3.1",
+    "mathjs": "^10.0.0"
+  }
+}
