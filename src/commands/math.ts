@@ -1,11 +1,12 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { CacheType, ColorResolvable, CommandInteraction, MessageEmbed } from 'discord.js';
+import { CacheType, CommandInteraction } from 'discord.js';
 import Command from '../types/Command.js';
-import data from "../../data.js";
 
 import {
     evaluate
 } from 'mathjs'
+
+import EmbedEngine from '../types/EmbedEngine.js';
 
 const math = new Command(
     new SlashCommandBuilder()
@@ -21,17 +22,13 @@ const math = new Command(
 math.on("interaction", async (interaction: CommandInteraction<CacheType>) => {
     const evaluation = interaction.options.getString("evaluation", true);
 
-    const embed = new MessageEmbed()
-        .setTitle(math.slash.name + " - response")
-        .setColor(data.color as ColorResolvable)
-        .setFooter(interaction.client.user.username)
-        .setTimestamp();
+    let embed;
 
     try {
         const evaled = evaluate(evaluation);
-        embed.setDescription(`${evaluation} = ${evaled}`)
+        embed = EmbedEngine.success(`${evaluation} = ${evaled}`);
     } catch {
-        embed.setDescription(`Invalid math expression.`)
+        embed = EmbedEngine.error(`Invalid math expression.`);
     }
     
     await interaction.reply({ embeds: [ embed ] });

@@ -3,6 +3,7 @@ import { CacheType, CommandInteraction } from 'discord.js';
 import Command from '../types/Command.js';
 import Markov from "js-markov";
 import { markov as markovDb } from "../databases.js";
+import EmbedEngine from '../types/EmbedEngine.js';
 
 const markov = new Command(
     new SlashCommandBuilder()
@@ -26,35 +27,36 @@ const markov = new Command(
 markov.on("interaction", async (interaction: CommandInteraction<CacheType>) => {
     if(interaction.options.getSubcommand() === "start") {
         if(await markovDb.has(interaction.channelId)) {
-            await interaction.reply("A Markov Chain is already running!");
+            await interaction.reply({ embeds: [ EmbedEngine.error("A Markov Chain is already running!") ] });
             return;
         }
 
         await markovDb.set(interaction.channelId, []);
 
-        await interaction.reply("Markov Chain started!");
+        await interaction.reply({ embeds: [ EmbedEngine.success("Markov Chain started!") ] });
     } else if(interaction.options.getSubcommand() === "stop") {
         if(!await markovDb.has(interaction.channelId)) {
-            await interaction.reply("There is no Markov Chain running!");
+            await interaction.reply({ embeds: [ EmbedEngine.error("There is no Markov Chain running!") ] });
             return;
         }
 
         await markovDb.delete(interaction.channelId);
 
-        await interaction.reply("Markov Chain stopped!");
+        await interaction.reply({ embeds: [ EmbedEngine.success("Markov Chain stopped!") ] });
     } else if(interaction.options.getSubcommand() === "generate") {
         if(!await markovDb.has(interaction.channelId)) {
-            await interaction.reply("There is no Markov Chain running!");
+            await interaction.reply({ embeds: [ EmbedEngine.error("There is no Markov Chain running!") ] });
             return;
         }
 
         const messages = await markovDb.get(interaction.channelId);
 
         if(messages.length < 3) {
-            await interaction.reply("Not enough messages to generate a message!");
+            await interaction.reply({ embeds: [ EmbedEngine.error("Not enough messages to generate a Markov Chain!") ] });
             return;
         }
-        await interaction.reply("Training chain..");
+        
+        await interaction.reply({ embeds: [ EmbedEngine.loading("Training Markov Chain...") ] });
 
         const startTime = Date.now();
         const chain = new Markov();
@@ -64,10 +66,10 @@ markov.on("interaction", async (interaction: CommandInteraction<CacheType>) => {
 
         chain.generateRandom();
 
-        await interaction.editReply(`
+        await interaction.editReply({ embeds: [ EmbedEngine.loading(`
 Message amount: \`${messages.length}\`
 Took: \`${Date.now()-startTime}ms\` to train the Chain.
-Message: \`${chain.generateRandom()}\``);
+Message: \`${chain.generateRandom()}\``) ] });
     }
 });
 

@@ -1,4 +1,4 @@
-import { Client, Intents, Collection, GuildMember } from 'discord.js';
+import { Client, Intents, Collection, GuildMember, ClientApplication, ColorResolvable, MessageEmbed, CommandInteraction } from 'discord.js';
 import { readdirSync } from 'fs';
 import Command from './types/Command.js';
 import { markov } from "./databases.js";
