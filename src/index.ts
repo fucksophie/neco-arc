@@ -15,7 +15,7 @@ commandFiles.forEach(async commandFile => {
 });
 
 client.once('ready', () => {
-	console.log('started');
+	console.log('started ' + client.user.username);
 });
 
 client.on('interactionCreate', async interaction => {

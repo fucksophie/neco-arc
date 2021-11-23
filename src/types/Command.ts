@@ -2,9 +2,9 @@ import  { SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from '@disco
 import {EventEmitter} from "events";
 
 export default class Command extends EventEmitter {
-    slash: SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder;
+    slash: SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">;
 
-    constructor(slash: SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder) {
+    constructor(slash: SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">) {
         super({});
         this.slash = slash;
     }
