@@ -1,10 +1,9 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { CacheType, ClientApplication, CommandInteraction } from 'discord.js';
-import Command from '../types/Command.js';
+import Command from '../utils/Command.js';
 import { readdirSync } from 'fs';
-import EmbedEngine from '../types/EmbedEngine.js';
+import EmbedEngine from '../utils/EmbedEngine.js';
 
-const commands: Array<Command> = [];
+const commands = [];
 
 readdirSync('./src/commands').filter(file => file.endsWith('.js')).forEach(async A => {
 	commands.push((await import(`./${A}`)).default);
@@ -28,8 +27,8 @@ const deploy = new Command(
 				.setDescription("Register slash commands in the current context."))
 );
 
-deploy.on("interaction", async (interaction: CommandInteraction<CacheType>) => {
-	const app: ClientApplication = await interaction.client.application.fetch();
+deploy.on("interaction", async interaction => {
+	const app = await interaction.client.application.fetch();
 
 	if(interaction.user.id !== app.owner.id) {
     	await interaction.reply({ embeds: [ EmbedEngine.error("You're not the owner of this application.") ] });

@@ -1,9 +1,8 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { CacheType, CommandInteraction } from 'discord.js';
-import Command from '../types/Command.js';
+import Command from '../utils/Command.js';
 import Markov from "js-markov";
 import { markov as markovDb } from "../databases.js";
-import EmbedEngine from '../types/EmbedEngine.js';
+import EmbedEngine from '../utils/EmbedEngine.js';
 
 const markov = new Command(
     new SlashCommandBuilder()
@@ -24,7 +23,7 @@ const markov = new Command(
 );
 
 
-markov.on("interaction", async (interaction: CommandInteraction<CacheType>) => {
+markov.on("interaction", async interaction => {
     if(interaction.options.getSubcommand() === "start") {
         if(await markovDb.has(interaction.channelId)) {
             await interaction.reply({ embeds: [ EmbedEngine.error("A Markov Chain is already running!") ] });

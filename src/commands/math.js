@@ -1,12 +1,11 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { CacheType, CommandInteraction } from 'discord.js';
-import Command from '../types/Command.js';
+import Command from '../utils/Command.js';
 
 import {
     evaluate
 } from 'mathjs'
 
-import EmbedEngine from '../types/EmbedEngine.js';
+import EmbedEngine from '../utils/EmbedEngine.js';
 
 const math = new Command(
     new SlashCommandBuilder()
@@ -19,7 +18,7 @@ const math = new Command(
 );
 
 
-math.on("interaction", async (interaction: CommandInteraction<CacheType>) => {
+math.on("interaction", async interaction=> {
     const evaluation = interaction.options.getString("evaluation", true);
 
     let embed;

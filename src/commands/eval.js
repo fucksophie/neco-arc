@@ -1,8 +1,6 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { CacheType, ClientApplication, CommandInteraction } from 'discord.js';
-import Command from '../types/Command.js';
-
-import EmbedEngine from '../types/EmbedEngine.js';
+import Command from '../utils/Command.js';
+import EmbedEngine from '../utils/EmbedEngine.js';
 
 const evalCommand = new Command(
     new SlashCommandBuilder()
@@ -15,8 +13,8 @@ const evalCommand = new Command(
 );
 
 
-evalCommand.on("interaction", async (interaction: CommandInteraction<CacheType>) => {
-	const app: ClientApplication = await interaction.client.application.fetch();
+evalCommand.on("interaction", async interaction => {
+	const app = await interaction.client.application.fetch();
 
 	if(interaction.user.id == app.owner.id) {
 		try {
@@ -31,7 +29,7 @@ evalCommand.on("interaction", async (interaction: CommandInteraction<CacheType>)
 	}
 });
 
-async function clean(text: string){
+async function clean(text){
 	if (text && text.constructor.name == "Promise")
 		text = await text;
 	
