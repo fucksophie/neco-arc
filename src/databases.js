@@ -5,3 +5,8 @@ export const markov = new Josh({
   name: 'MarkovDB',
   provider,
 });
+
+export const lastfm = new Josh({
+  name: 'lastfm',
+  provider,
+});
