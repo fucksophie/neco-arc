@@ -1,5 +1,5 @@
 import { Client, Intents, Collection } from 'discord.js';
-import { readdirSync } from 'fs';
+import { readdirSync, readFileSync } from 'fs';
 import { markov } from "./databases.js";
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
@@ -7,6 +7,8 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 const commands = new Collection();
 
 const commandFiles = readdirSync('./src/commands').filter(file => file.endsWith('.js'));
+
+const config = JSON.parse(readFileSync("./config.json").toString());
 
 commandFiles.forEach(async commandFile => {
 	const command = (await import(`./commands/${commandFile}`)).default;
@@ -38,4 +40,4 @@ client.on('messageCreate', async message => {
 	}
 });
 
-client.login(process.env.TOKEN);
+client.login(config.token);
