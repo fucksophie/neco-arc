@@ -2,7 +2,7 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 
 import Command from '../utils/Command.js';
 import EmbedEngine from '../utils/EmbedEngine.js';
-import commands from "./utils/data.js"
+import commands from "../utils/data.js"
 
 const deploy = new Command(
     new SlashCommandBuilder()
