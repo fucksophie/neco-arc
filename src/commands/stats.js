@@ -1,8 +1,13 @@
 import p from "phin";
 import  { SlashCommandBuilder } from '@discordjs/builders';
 
+import { readFileSync } from 'fs';
+
 import Command from '../utils/Command.js';
 import EmbedEngine from '../utils/EmbedEngine.js';
+import { Console } from "console";
+
+const config = JSON.parse(readFileSync("./config.json").toString());
 
 const stats = new Command(
     new SlashCommandBuilder()
@@ -33,8 +38,23 @@ stats.on("interaction", async interaction => {
         embed.setFooter(`There are currently ${res.body.online_user} users online!`);
     
         await interaction.reply({ embeds: [ embed ] });
-    } else {
-        await interaction.reply({ embeds: [ EmbedEngine.error("Not implemented.") ] });
+    } else if(command == "kawaiired") {
+        const embed = EmbedEngine.success("Kawaii.red endpoint status");
+        
+        for await (const e of ["all", "most_endpoint"]) {
+            const answer = await p({
+                url: `https://kawaii.red/api/stats/${e}/token=${config.keys.kawaii}/`,
+                parse: "json"
+            })
+
+            if(e == "all") {
+                embed.addField("Amount of request sent", answer.body.response.toString(), true)
+            } else if(e == "most_endpoint") {
+                embed.addField("Most used endpoint", `${answer.body.response.name} - ${answer.body.response.value}`, true)
+            }
+        }
+
+        await interaction.reply({ embeds: [ embed ] });
     }
 
 });
