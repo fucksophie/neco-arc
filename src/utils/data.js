@@ -33,10 +33,6 @@ export const reactionData = {
         {
             name: "wave",
             action: "waves :) to"
-        },
-        {
-            name: "trap",
-            action: "trapped o_o"
         }
     ]
 }
