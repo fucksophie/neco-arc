@@ -29,12 +29,13 @@ const markov = new Command(
 markov.on("interaction", async interaction => {
     const reaction = reactionData.reactions.find(e => e.name == interaction.options.getString("reaction", true))
     const user = interaction.options.getUser("user", true);
-   
+    await interaction.deferReply();
+
     const res = await p({
         'url': `https://kawaii.red/api/gif/${reaction.name}/token=${config.keys.kawaii}&type=txt/`,
     })
 
-    await interaction.reply({
+    await interaction.editReply({
         embeds: [
             EmbedEngine.success(`${interaction.user.username} ${reaction.action} ${user.username}`)
             .setImage(res.body.toString())

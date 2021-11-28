@@ -53,6 +53,8 @@ lastfm.on("interaction", async interaction=> {
                 return;
             }
     
+            await interaction.deferReply();
+
             const user = await lastDb.get(interaction.user.id);
     
             const period = lastfmData.periods.find(e => e.name == (interaction.options.getString("period", false) || "7day"));
@@ -78,11 +80,13 @@ lastfm.on("interaction", async interaction=> {
                 }
             }
     
-            await interaction.reply({ embeds: [embed] });
+            await interaction.editReply({ embeds: [embed] });
         }
     })
 
     if(subcommand == "link") {
+        await interaction.deferReply();
+
         const name = interaction.options.getString("name", true);
 
         const res = await p({
@@ -91,7 +95,7 @@ lastfm.on("interaction", async interaction=> {
         })
 
         if(res.body.error) {
-            await interaction.reply({ embeds: [ EmbedEngine.error(`User "${name}" does not exist.`) ] });
+            await interaction.editReply({ embeds: [ EmbedEngine.error(`User "${name}" does not exist.`) ] });
             return;
         }
 
@@ -100,11 +104,11 @@ lastfm.on("interaction", async interaction=> {
                 name
             })
 
-            await interaction.reply({ embeds: [ EmbedEngine.success("First time? Changed last.fm name to " + name + "!") ] });
+            await interaction.editReply({ embeds: [ EmbedEngine.success("First time? Changed last.fm name to " + name + "!") ] });
         } else {
             const user = await lastDb.get(interaction.user.id);
 
-            await interaction.reply({ embeds: [ EmbedEngine.success("Changed last.fm name from " + user.name + " to " + name + "!") ] });
+            await interaction.editReply({ embeds: [ EmbedEngine.success("Changed last.fm name from " + user.name + " to " + name + "!") ] });
             
             user.name = name;
             await lastDb.set(interaction.user.id, user);
@@ -116,6 +120,8 @@ lastfm.on("interaction", async interaction=> {
             await interaction.reply({ embeds: [ EmbedEngine.error("No last.fm account is linked to this user. Use /lastfm link") ] });
             return;
         }
+
+        await interaction.deferReply();
 
         const user = await lastDb.get(interaction.user.id);
 
@@ -138,12 +144,12 @@ lastfm.on("interaction", async interaction=> {
                     embed.setThumbnail(image["#text"]);
                 } 
 
-                await interaction.reply({ embeds: [ embed ] });
+                await interaction.editReply({ embeds: [ embed ] });
                 return;
             }
         }
 
-        await interaction.reply({ embeds: [ EmbedEngine.error(`You're not playing any song.`) ] });
+        await interaction.editReply({ embeds: [ EmbedEngine.error(`You're not playing any song.`) ] });
     }
 });
 

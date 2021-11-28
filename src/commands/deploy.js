@@ -30,6 +30,8 @@ deploy.on("interaction", async interaction => {
 		return;
 	}
 
+	await interaction.deferReply();
+
 	let finished = "Executed the following actions: ";
 
 	if(interaction.options.getBoolean("delete", true)) {
@@ -52,7 +54,7 @@ deploy.on("interaction", async interaction => {
 		}
 	}
 
-	await interaction.reply({ embeds: [ EmbedEngine.success(finished) ] });	
+	await interaction.editReply({ embeds: [ EmbedEngine.success(finished) ] });	
 });
 
 export default deploy;

@@ -26,6 +26,7 @@ const stats = new Command(
 stats.on("interaction", async interaction => {
     const command = interaction.options.getString("location", true);
     if(command == "growtopia") {
+    	await interaction.deferReply();
         const res = await p({
             'url': `https://www.growtopiagame.com/detail`,
             'parse': 'json'
@@ -37,8 +38,10 @@ stats.on("interaction", async interaction => {
         embed.setImage(res.body.world_day_images.full_size);
         embed.setFooter(`There are currently ${res.body.online_user} users online!`);
     
-        await interaction.reply({ embeds: [ embed ] });
+        await interaction.editReply({ embeds: [ embed ] });
     } else if(command == "kawaiired") {
+        await interaction.deferReply();
+
         const embed = EmbedEngine.success("Kawaii.red endpoint status");
         
         for await (const e of ["all", "most_endpoint"]) {
@@ -54,7 +57,7 @@ stats.on("interaction", async interaction => {
             }
         }
 
-        await interaction.reply({ embeds: [ embed ] });
+        await interaction.editReply({ embeds: [ embed ] });
     }
 
 });
