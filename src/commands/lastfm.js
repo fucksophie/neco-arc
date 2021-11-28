@@ -64,13 +64,12 @@ lastfm.on("interaction", async interaction=> {
 
             const embed = EmbedEngine.success(`Your top ${e.name}s - ${period.human}`);
 
+            const items = res.body[`top${e.name}s`][e.name];
 
             for(let i = 0; i < 5; i++) {
-                const items = res.body[`top${e.name}s`][e.name];
-
                 if(items.hasOwnProperty(i)) {
                     const item = items[i];
-    
+
                     if(item.artist) {
                         embed.addField(`${item.artist.name} - ${item.name}`, `Playcount of ${item.playcount}.`, true)
                     } else {
@@ -132,7 +131,7 @@ lastfm.on("interaction", async interaction=> {
 
                 const embed = EmbedEngine.success(`${user.name}'s listening to "${track.artist["#text"]} - ${track.name}"`);
 
-                embed.setURL(embed.url);
+                embed.setURL(track.url);
 
                 if(track.image.length >= 1) {
                     const image = track.image[track.image.length-1];
