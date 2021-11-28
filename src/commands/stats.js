@@ -1,3 +1,4 @@
+import p from "phin";
 import  { SlashCommandBuilder } from '@discordjs/builders';
 
 import Command from '../utils/Command.js';
@@ -18,7 +19,24 @@ const stats = new Command(
 );
 
 stats.on("interaction", async interaction => {
-    await interaction.reply({ embeds: [ EmbedEngine.error("Not implemented.") ] });
+    const command = interaction.options.getString("location", true);
+    if(command == "growtopia") {
+        const res = await p({
+            'url': `https://www.growtopiagame.com/detail`,
+            'parse': 'json'
+        })
+
+        const embed = EmbedEngine.success("Growtopia Statistics");
+
+        embed.setDescription(`Current World of the Day is ${res.body.world_day_images.full_size.replace(/(\.png)|.*\//gm, "")}!`)
+        embed.setImage(res.body.world_day_images.full_size);
+        embed.setFooter(`There are currently ${res.body.online_user} users online!`);
+    
+        await interaction.reply({ embeds: [ embed ] });
+    } else {
+        await interaction.reply({ embeds: [ EmbedEngine.error("Not implemented.") ] });
+    }
+
 });
 
 export default stats;
