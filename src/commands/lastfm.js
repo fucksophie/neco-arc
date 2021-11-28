@@ -19,7 +19,7 @@ lastfmData.top.forEach(e => {
             .addStringOption(option => 
                 option
                     .setName("period")
-                    .setDescription("Period of time to fetch tracks from")
+                    .setDescription(`Period of time to fetch ${e.name}s from`)
                     .addChoices(lastfmData.periods.map(e => {
                         return [e.human, e.name]
                     })))
