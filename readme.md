@@ -8,11 +8,12 @@ Currently, we use kawaii.red and last.fm's API. You must have those API keys ins
 - Reactions, used for roleplaying or just as a handy gesture (/reaction wave)
 - Entirely slash commands, written in updated Discord.js v13!
 
-<center>
+
+<h1 align="center">
 
 ![buranyuu](https://cdn.discordapp.com/app-icons/911928647278006282/0dcc63b859dbb39b6286fc3de16d0d0c.png?size=256)
 
-</center>
+</h1>
 
 ## Cool! Where's the invite link? 
 [Here! This link does not create a extra role. You might need additional permissions.](https://discord.com/api/oauth2/authorize?client_id=911928647278006282&permissions=0&scope=applications.commands%20bot)
