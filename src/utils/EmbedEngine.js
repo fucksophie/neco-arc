@@ -1,5 +1,3 @@
-// embed engine
-
 import { MessageEmbed } from "discord.js";
 
 export default class EmbedEngine {

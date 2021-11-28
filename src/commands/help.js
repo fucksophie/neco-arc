@@ -1,7 +1,8 @@
 import  { SlashCommandBuilder } from '@discordjs/builders';
+
 import Command from '../utils/Command.js';
-import {readdirSync} from "fs";
 import EmbedEngine from '../utils/EmbedEngine.js';
+import commands from "../utils/data.js"
 
 const help = new Command(
     new SlashCommandBuilder()
@@ -9,11 +10,6 @@ const help = new Command(
         .setDescription('Recieve help!')
 );
 
-const commands = [];
-
-readdirSync('./src/commands').filter(file => file.endsWith('.js')).forEach(async A => {
-	commands.push((await import(`./${A}`)).default);
-});
 
 help.on("interaction", async interaction => {
     await interaction.reply({ embeds: [ EmbedEngine.success("Available commands!")

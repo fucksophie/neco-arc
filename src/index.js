@@ -1,20 +1,12 @@
-import { Client, Intents, Collection } from 'discord.js';
-import { readdirSync, readFileSync } from 'fs';
-import { markov } from "./databases.js";
+import { Client, Intents } from 'discord.js';
+import { readFileSync } from 'fs';
+
+import { markov } from "./utils/databases.js";
+import commands from "./utils/data.js"
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
-const commands = new Collection();
-
-const commandFiles = readdirSync('./src/commands').filter(file => file.endsWith('.js'));
-
 const config = JSON.parse(readFileSync("./config.json").toString());
-
-commandFiles.forEach(async commandFile => {
-	const command = (await import(`./commands/${commandFile}`)).default;
-
-	commands.set(command.slash.name, command);
-});
 
 client.once('ready', () => {
 	console.log('started ' + client.user.username);
@@ -23,14 +15,13 @@ client.once('ready', () => {
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
-	const command = commands.get(interaction.commandName);
+	const command = commands.find(e => e.slash.name == interaction.commandName);
 
 	if (!command) return;
 
 	command.emit("interaction", interaction);
 });
 
-// on a message, if the markov chain exists add to it
 client.on('messageCreate', async message => {
 	if (message.author.bot) return;
 	if (!message.guild) return;

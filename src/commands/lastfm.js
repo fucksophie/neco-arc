@@ -1,13 +1,14 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import Command from '../utils/Command.js';
-import { lastfm as lastDb } from "../databases.js";
 import p from "phin";
+
 import { readFileSync } from 'fs';
+
+import Command from '../utils/Command.js';
+import EmbedEngine from '../utils/EmbedEngine.js';
 import { lastfmData } from "../utils/data.js"
+import { lastfm as lastDb } from "../utils/databases.js";
 
 const config = JSON.parse(readFileSync("./config.json").toString());
-
-import EmbedEngine from '../utils/EmbedEngine.js';
 
 const slashCommand =  new SlashCommandBuilder();
 
@@ -66,7 +67,7 @@ lastfm.on("interaction", async interaction=> {
 
             for(let i = 0; i < 5; i++) {
                 const items = res.body[`top${e.name}s`][e.name];
-                
+
                 if(items.hasOwnProperty(i)) {
                     const item = items[i];
     

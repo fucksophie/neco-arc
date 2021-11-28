@@ -1,13 +1,8 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
+
 import Command from '../utils/Command.js';
-import { readdirSync } from 'fs';
 import EmbedEngine from '../utils/EmbedEngine.js';
-
-const commands = [];
-
-readdirSync('./src/commands').filter(file => file.endsWith('.js')).forEach(async A => {
-	commands.push((await import(`./${A}`)).default);
-});
+import commands from "./utils/data.js"
 
 const deploy = new Command(
     new SlashCommandBuilder()

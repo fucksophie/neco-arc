@@ -1,7 +1,9 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
-import { readFileSync } from 'fs';
-import Command from '../utils/Command.js';
 import p from "phin";
+import { SlashCommandBuilder } from '@discordjs/builders';
+
+import { readFileSync } from 'fs';
+
+import Command from '../utils/Command.js';
 import EmbedEngine from '../utils/EmbedEngine.js';
 import { reactionData } from "../utils/data.js"
 
