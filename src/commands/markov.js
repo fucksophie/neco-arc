@@ -60,13 +60,14 @@ markov.on("interaction", async interaction => {
 
         const startTime = Date.now();
         const chain = new Markov();
+        
         chain.addStates(messages);
 
         chain.train();
 
         chain.generateRandom();
 
-        await interaction.editReply({ embeds: [ EmbedEngine.loading(`
+        await interaction.editReply({ embeds: [ EmbedEngine.success(`
 Message amount: \`${messages.length}\`
 Took: \`${Date.now()-startTime}ms\` to train the Chain.
 Message: \`${chain.generateRandom()}\``) ] });
