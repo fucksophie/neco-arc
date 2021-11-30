@@ -1,5 +1,5 @@
 import { Client, Intents } from 'discord.js';
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync, mkdirSync } from 'fs';
 
 import { markov } from "./utils/databases.js";
 import commands from "./utils/data.js"
@@ -26,6 +26,10 @@ client.on('messageCreate', async message => {
 	if (message.author.bot) return;
 	if (!message.guild) return;
 	
+	if(!existsSync("./lastfm_cache/")) {
+		mkdirSync("./lastfm_cache/")
+	}
+
 	if(await markov.has(message.channelId)) {
 		await markov.push(message.channelId, message.content, false);
 	}

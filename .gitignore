@@ -4,3 +4,4 @@ node_modules
 .vscode
 data
 config.json
+lastfm_cache
