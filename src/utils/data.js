@@ -63,8 +63,11 @@ export const lastfmData = {
             human: "Overall"
         }
     ],
-    sizes: Array.from({length:5},(v,k)=>[`${k+2}x${k+2}`, [k+2,k+2]]),
     top: [
+        {
+            name: "album",
+            endpoint: "user.getTopAlbums"
+        },
         {
             name: "artist",
             endpoint: "user.getTopArtists"

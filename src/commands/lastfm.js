@@ -7,7 +7,6 @@ import Command from '../utils/Command.js';
 import EmbedEngine from '../utils/EmbedEngine.js';
 import { lastfmData } from "../utils/data.js"
 import { lastfm as lastDb } from "../utils/databases.js";
-import { chartInteractionHandler } from '../utils/lastfm/albumChart.js';
 
 const config = JSON.parse(readFileSync("./config.json").toString());
 
@@ -21,12 +20,14 @@ lastfmData.top.forEach(e => {
                 option
                     .setName("period")
                     .setDescription(`Period of time to fetch ${e.name}s from`)
-                    .addChoices(lastfmData.periods.map(e => [e.human, e.name])))
+                    .addChoices(lastfmData.periods.map(e => {
+                        return [e.human, e.name]
+                    })))
     )
 })
 
 const lastfm = new Command(
-    slashCommand.setName('lastfm')
+    slashCommand.setName('lastfm') // at this point the top-something subcommands are already added
     .setDescription("last.fm in Discord")
     .addSubcommand(subcommand => 
         subcommand.setName("link")
@@ -37,31 +38,13 @@ const lastfm = new Command(
                     .setDescription("Your name on last.fm!")
             ))
     .addSubcommand(subcommand => 
-        subcommand.setName(`topalbums`)
-            .setDescription(`Chart your top albums`)
-            .addStringOption(option => 
-                option
-                    .setName("period")
-                    .setDescription(`Period of time in history, to generate top album.`) // fix the wording
-                    .addChoices(lastfmData.periods.map(e => [e.human, e.name])))
-            .addStringOption(option => 
-                option.setName("size")
-                    .setDescription(`Set size of the chart`)
-                    .addChoices(lastfmData.sizes.map(e =>
-                         [e[0],e[0]]
-                    ))))
-    .addSubcommand(subcommand => 
         subcommand.setName("np")
             .setDescription("View your now-playing."))
 
 );
 
-lastfm.on("interaction", async interaction => {
+lastfm.on("interaction", async interaction=> {
     const subcommand = interaction.options.getSubcommand();
-
-    if(subcommand == "topalbums") {
-        await chartInteractionHandler(interaction);
-    }
 
     lastfmData.top.forEach(async e => {
         if(subcommand == `top${e.name}s`) {
@@ -169,6 +152,5 @@ lastfm.on("interaction", async interaction => {
         await interaction.editReply({ embeds: [ EmbedEngine.error(`You're not playing any song.`) ] });
     }
 });
-
 
 export default lastfm;
