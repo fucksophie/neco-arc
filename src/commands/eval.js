@@ -2,7 +2,7 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 
 import Command from '../utils/Command.js';
 import EmbedEngine from '../utils/EmbedEngine.js';
-import inspect from "util";
+import util from "util";
 
 const evalCommand = new Command(
     new SlashCommandBuilder()
@@ -36,7 +36,7 @@ async function clean(text){
 		text = await text;
 	
 	if (typeof text !== "string")
-		text = inspect(text, { depth: 1 });
+		text = util.inspect(text, { depth: 1 });
 	
 	text = text
 	  .replace(/`/g, "`" + String.fromCharCode(8203))
