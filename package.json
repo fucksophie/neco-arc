@@ -14,7 +14,7 @@
     "@discordjs/builders": "^0.7.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "@joshdb/core": "^1.2.7",
-    "@joshdb/sqlite": "^1.1.9",
+    "@joshdb/mongo": "^1.1.6",
     "discord.js": "^13.3.1",
     "js-markov": "^3.0.3",
     "mathjs": "^10.0.0",
