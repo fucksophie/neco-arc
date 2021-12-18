@@ -1,9 +1,10 @@
 # neco-arc - multifunctional discord bot
 ## Description
-Currently, we use kawaii.red and last.fm's API. You must have those API keys inside of config.json. Most polished features are probably /lastfm and /reaction. Both of them are entirierly dynamic. You can edit utils/data.js to modify their usage heavily. All embeds are handled by utils/embedengine.js  
+Currently, we use kawaii.red, last.fm's and twitter's API. You must have those API keys inside of config.json. Most polished features are probably /lastfm and /reaction. Both of them are entirierly dynamic. You can edit utils/data.js to modify their usage heavily. All embeds are handled by utils/embedengine.js  
 
 ## What features do you have?
 - Great last.fm integration
+- Twitter tweet sending
 - Markov chain generating via js-markov
 - Reactions, used for roleplaying or just as a handy gesture (/reaction wave)
 - Entirely slash commands, written in updated Discord.js v13!
