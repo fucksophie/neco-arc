@@ -23,9 +23,7 @@ tweet.on("interaction", async interaction => {
 	const client = new TwitterApi(config.keys.twitter);
 	
 	try {
-		const tweetRequest = await client.v1.tweet(`${interaction.options.getString('tweet', true)}\nMessage sent by ${interaction.user.username}#${interaction.user.discriminator}!`, {
-			attachment_url: interaction.user.avatarURL()
-		});
+		const tweetRequest = await client.v1.tweet(`${interaction.options.getString('tweet', true)}\nMessage sent by ${interaction.user.username}#${interaction.user.discriminator}!`);
 		
 		await interaction.editReply({ embeds: [
 			new MessageEmbed()
