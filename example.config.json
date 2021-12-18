@@ -2,6 +2,12 @@
     "token": "owpedujg9dsuoighdespiguj",
     "keys": {
         "kawaii": "024301801254.ghsd0gsdogj",
-        "lastfm": "somecaca"
+        "lastfm": "somecaca",
+        "twitter": {
+            "appKey": "asgasg",
+            "appSecret": "asgasgag",
+            "accessToken": "j1otr0-gj",
+            "accessSecret": "12923hgp3wgjju"
+        }
     }
 }

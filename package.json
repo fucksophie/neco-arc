@@ -18,6 +18,7 @@
     "discord.js": "^13.3.1",
     "js-markov": "^3.0.3",
     "mathjs": "^10.0.0",
-    "phin": "^3.6.1"
+    "phin": "^3.6.1",
+    "twitter-api-v2": "^1.7.2"
   }
 }
