@@ -1,12 +1,10 @@
 import { Client, Intents } from 'discord.js';
-import { readFileSync } from 'fs';
 
 import { markov } from "./utils/databases.js";
 import commands from "./utils/data.js"
+import config from './utils/Config.js';
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-
-const config = JSON.parse(readFileSync("./config.json").toString());
 
 client.once('ready', () => {
 	console.log('started ' + client.user.username);

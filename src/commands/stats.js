@@ -1,13 +1,10 @@
 import p from "phin";
 import  { SlashCommandBuilder } from '@discordjs/builders';
 
-import { readFileSync } from 'fs';
-
 import Command from '../utils/Command.js';
 import EmbedEngine from '../utils/EmbedEngine.js';
-import { Console } from "console";
 
-const config = JSON.parse(readFileSync("./config.json").toString());
+import config from '../utils/Config.js';
 
 const stats = new Command(
     new SlashCommandBuilder()

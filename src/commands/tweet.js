@@ -1,9 +1,8 @@
 import  { SlashCommandBuilder } from '@discordjs/builders';
 
 import Command from '../utils/Command.js';
-import {readFileSync} from "fs";
+import config from '../utils/Config.js';
 
-const config = JSON.parse(readFileSync("./config.json").toString());
 import { TwitterApi } from 'twitter-api-v2';
 import { MessageEmbed } from 'discord.js';
 import EmbedEngine from '../utils/EmbedEngine.js';
@@ -24,7 +23,9 @@ tweet.on("interaction", async interaction => {
 	const client = new TwitterApi(config.keys.twitter);
 	
 	try {
-		const tweetRequest = await client.v1.tweet(`${interaction.options.getString('tweet', true)}\nMessage sent by ${interaction.user.username}#${interaction.user.discriminator}!`);
+		const tweetRequest = await client.v1.tweet(`${interaction.options.getString('tweet', true)}\nMessage sent by ${interaction.user.username}#${interaction.user.discriminator}!`, {
+			attachment_url: interaction.user.avatarURL()
+		});
 		
 		await interaction.editReply({ embeds: [
 			new MessageEmbed()
@@ -37,6 +38,7 @@ tweet.on("interaction", async interaction => {
 				.setTimestamp()
 		]});
 	} catch (o_o){
+		console.log(o_o)
 		await interaction.editReply({ embeds: [ EmbedEngine.error("Couldn't post the tweet.")]});
 	}
 

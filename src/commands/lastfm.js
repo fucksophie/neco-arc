@@ -1,14 +1,11 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import p from "phin";
 
-import { readFileSync } from 'fs';
-
 import Command from '../utils/Command.js';
 import EmbedEngine from '../utils/EmbedEngine.js';
 import { lastfmData } from "../utils/data.js"
 import { lastfm as lastDb } from "../utils/databases.js";
-
-const config = JSON.parse(readFileSync("./config.json").toString());
+import config from '../utils/Config.js';
 
 const slashCommand =  new SlashCommandBuilder();
 

@@ -3,6 +3,7 @@
     "keys": {
         "kawaii": "024301801254.ghsd0gsdogj",
         "lastfm": "somecaca",
+        "mongo": "mongodb://localhost",
         "twitter": {
             "appKey": "asgasg",
             "appSecret": "asgasgag",
