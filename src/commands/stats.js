@@ -1,7 +1,7 @@
 import p from "phin";
 import  { SlashCommandBuilder } from '@discordjs/builders';
 
-import Command from '../utils/Command.js';
+import { Command } from '../utils/Command.js';
 import EmbedEngine from '../utils/EmbedEngine.js';
 
 import config from '../utils/Config.js';

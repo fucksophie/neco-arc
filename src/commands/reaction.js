@@ -1,11 +1,22 @@
 import p from "phin";
 import { SlashCommandBuilder } from '@discordjs/builders';
 
-import Command from '../utils/Command.js';
+import { Command } from '../utils/Command.js';
 import EmbedEngine from '../utils/EmbedEngine.js';
-import { reactionData } from "../utils/data.js"
 
 import config from '../utils/Config.js';
+
+
+const reactions = [
+    { name: "kill", action: "fucking killed"}, 
+    { name: "hug", action: "hugged :3"},
+    { name: "dodge", action: "DODGED"}, 
+    { name: "kiss", action: "kissed 0_0"},
+    { name: "lick", action: "licked??"}, 
+    { name: "love", action: "loves"},
+    { name: "slap", action: "slapped"}, 
+    { name: "wave", action: "waves :) to"}
+];
 
 const markov = new Command(
     new SlashCommandBuilder()
@@ -14,7 +25,7 @@ const markov = new Command(
             option.setName('reaction')
                 .setDescription('Reaction')
                 .setRequired(true)
-                .addChoices(reactionData.reactions.map(e => {
+                .addChoices(reactions.map(e => {
                     return [e.name.charAt(0).toUpperCase() + e.name.slice(1), e.name ]
                 })))
         .addUserOption(option => 
@@ -25,7 +36,7 @@ const markov = new Command(
 );
 
 markov.on("interaction", async interaction => {
-    const reaction = reactionData.reactions.find(e => e.name == interaction.options.getString("reaction", true))
+    const reaction = reactions.find(e => e.name == interaction.options.getString("reaction", true))
     const user = interaction.options.getUser("user", true);
     await interaction.deferReply();
 

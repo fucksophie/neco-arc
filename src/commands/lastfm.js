@@ -1,15 +1,25 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import p from "phin";
 
-import Command from '../utils/Command.js';
+import { Command } from '../utils/Command.js';
 import EmbedEngine from '../utils/EmbedEngine.js';
-import { lastfmData } from "../utils/data.js"
 import { lastfm as lastDb } from "../utils/databases.js";
 import config from '../utils/Config.js';
 
 const slashCommand =  new SlashCommandBuilder();
 
-lastfmData.top.forEach(e => {
+const data = { periods: [
+    {name: "7day",human: "7 Days"}, {name: "1month",human: "1 Month"},
+    {name: "3month",human: "3 Months"}, {name: "6month",human: "6 Months"},
+    {name: "12months",human: "1 Year"}, {name: "overall",human: "Overall"}],
+    top: [
+        {name: "album",endpoint: "user.getTopAlbums"},
+        {name: "artist",endpoint: "user.getTopArtists"},
+        {name: "track",endpoint: "user.getTopTracks"}
+    ]
+};
+
+data.top.forEach(e => {
     slashCommand.addSubcommand(subcommand => 
         subcommand.setName(`top${e.name}s`)
             .setDescription(`View your top ${e.name}s!`)
@@ -17,7 +27,7 @@ lastfmData.top.forEach(e => {
                 option
                     .setName("period")
                     .setDescription(`Period of time to fetch ${e.name}s from`)
-                    .addChoices(lastfmData.periods.map(e => {
+                    .addChoices(data.periods.map(e => {
                         return [e.human, e.name]
                     })))
     )
@@ -43,7 +53,7 @@ const lastfm = new Command(
 lastfm.on("interaction", async interaction=> {
     const subcommand = interaction.options.getSubcommand();
 
-    lastfmData.top.forEach(async e => {
+    data.top.forEach(async e => {
         if(subcommand == `top${e.name}s`) {
             if(!(await lastDb.has(interaction.user.id))) {
                 await interaction.reply({ embeds: [ EmbedEngine.error("No last.fm account is linked to this user. Use /lastfm link") ] });
@@ -54,7 +64,7 @@ lastfm.on("interaction", async interaction=> {
 
             const user = await lastDb.get(interaction.user.id);
     
-            const period = lastfmData.periods.find(e => e.name == (interaction.options.getString("period", false) || "7day"));
+            const period = data.periods.find(e => e.name == (interaction.options.getString("period", false) || "7day"));
     
             const res = await p({
                 'url': `http://ws.audioscrobbler.com/2.0/?method=${e.endpoint}&user=${user.name}&api_key=${config.keys.lastfm}&format=json&period=${period.name}`,

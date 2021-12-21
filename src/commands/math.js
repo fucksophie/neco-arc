@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { evaluate } from 'mathjs'
 
-import Command from '../utils/Command.js';
+import { Command } from '../utils/Command.js';
 import EmbedEngine from '../utils/EmbedEngine.js';
 
 const math = new Command(

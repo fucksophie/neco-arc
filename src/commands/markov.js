@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import Markov from "js-markov";
 
-import Command from '../utils/Command.js';
+import { Command } from '../utils/Command.js';
 import EmbedEngine from '../utils/EmbedEngine.js';
 import { markov as markovDb } from "../utils/databases.js";
 
