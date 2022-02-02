@@ -42,20 +42,28 @@ const social = new Command(
 
 social.on("interaction", async interaction => {
 	await interaction.deferReply();
+		console.log("DEFFERED")		
+
 	const category = interaction.options.getSubcommandGroup();
 	const type = interaction.options.getSubcommand();
 	if(category == "twitter") {
+		console.log("twitter category")		
 		const client = new TwitterApi(config.keys.twitter);
-
+		
 		if(type == "tweet") {
 			const tweet = interaction.options.getString("tweet");
+			console.log("tweeting " + tweet)		
 
 			try {
+						console.log("tweet")		
+
 				const tweetRequest = await client.v1.tweet(`
 					${tweet}
 					Message sent by ${interaction.user.username}#${interaction.user.discriminator}!
 				`.trim());
-				
+				console.log("sent tweet")		
+		console.log("editing replY")		
+
 				await interaction.editReply({ embeds: [
 					new MessageEmbed()
 						.setAuthor(`${tweetRequest.user.name} (@${tweetRequest.user.screen_name})`, tweetRequest.user.profile_image_url_https)
@@ -66,9 +74,13 @@ social.on("interaction", async interaction => {
 						.setColor("#1DA1F2")
 						.setTimestamp()
 				]});
+			console.log("edited reply")		
+
 			} catch (o_o){
 				console.log(o_o)
 				await interaction.editReply({ embeds: [ EmbedEngine.error("Couldn't post the tweet.")]});
+						console.log("error occured")		
+
 			}
 		} else if(type == "user") {
 			try {
