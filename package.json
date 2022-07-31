@@ -12,10 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/builders": "^0.7.0",
-    "@discordjs/rest": "^0.1.0-canary.0",
+    "@discordjs/rest": "^0.5.0",
     "@joshdb/core": "^1.2.7",
     "@joshdb/mongo": "^1.1.6",
-    "discord.js": "^13.3.1",
+    "discord.js": "^14.0.0",
     "js-markov": "^3.0.3",
     "mathjs": "^10.0.0",
     "phin": "^3.6.1",
